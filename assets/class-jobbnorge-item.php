@@ -2,7 +2,7 @@
 declare( strict_types = 1 );
 require_once ABSPATH . WPINC . '/class-simplepie.php';
 
-const SIMPLE_NAMESPACE_JOBBNORGE = 'https://export.jobbnorge.no/xml/';
+defined('SIMPLE_NAMESPACE_JOBBNORGE') or define('SIMPLE_NAMESPACE_JOBBNORGE', 'https://export.jobbnorge.no/xml/');
 
 if ( ! class_exists( 'Jobbnorge_Item' ) ) {
 
