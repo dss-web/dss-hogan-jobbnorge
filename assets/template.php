@@ -1,12 +1,13 @@
 <?php
 /**
- * Template for dss feed module
+ * Template for dss jobbnorge module
  *
  * $this is an instance of the Jobbnorge object.
  *
  * Available properties:
- * $this->feed (array) Array containing all download items.
- * $this->preview_image (string) If a preview image should be displayed or a generic icon.
+ * $this->feed (string) Array Jobbnorge feed url.
+ * $this->items (int) Number of items.
+ * $this->words (int) Number of word pr item.
  *
  * @package Hogan
  *
