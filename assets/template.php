@@ -24,7 +24,7 @@ $number_of_words = ( isset( $this->words ) && is_numeric( $this->words ) ) ? $th
 
 
 require_once ABSPATH . WPINC . '/feed.php';
-require_once 'class-simplepie-item-jobbnorge.php';
+require_once 'class-jobbnorge-item.php';
 
 if ( function_exists( 'fetch_feed' ) ) {
 	$feed = fetch_feed( $feed_url );
