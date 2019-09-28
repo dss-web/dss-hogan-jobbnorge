@@ -58,7 +58,7 @@ if ( empty( $items ) || ! is_array( $items ) ) {
 					</div>
 				</a>
 			</li>',
-			__( 'Søknadsfrist:', 'dss-hogan-jobbnorge' ),
+			__( 'Due date:', 'dss-hogan-jobbnorge' ),
 			esc_html( $item->get_jn_deadline() ),
 			esc_url( $item->get_permalink() ),
 			esc_html( $item->get_jn_title() ),
@@ -67,7 +67,7 @@ if ( empty( $items ) || ! is_array( $items ) ) {
 				'p'   => [],
 				'div' => [],
 			] ), $number_of_words, '' ),
-			sprintf( ' ... <a href="%s">%s</a>', esc_url( $item->get_permalink() ), __( 'Les mer', 'dss-hogan-jobbnorge' ) )
+			sprintf( ' ... <a href="%s">%s</a>', esc_url( $item->get_permalink() ), __( 'Read more', 'dss-hogan-jobbnorge' ) )
 		);
 	}
 	?>
