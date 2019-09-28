@@ -95,7 +95,7 @@ if ( ! class_exists( '\\Dekode\\Hogan\\Jobbnorge' ) && class_exists( '\\Dekode\\
 					'name'          => 'items',
 					'instructions'  => __( 'Max number of items display', 'dss-hogan-jobbnorge' ),
 					'required'      => 0,
-					'default_value' => apply_filters( 'dss/hogan/module/feed/items', 5 ),
+					'default_value' => apply_filters( 'dss/hogan/module/jobbnorge/items', 5 ),
 				],
 				[
 					'type'          => 'number',
