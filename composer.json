@@ -1,0 +1,26 @@
+{
+  "name": "dss-web/dss-hogan-jobbnorge",
+  "description": "DSS Download Module for Hogan",
+  "homepage": "https://github.com/dss-web/dss-hogan-jobbnorge",
+  "type": "wordpress-plugin",
+  "license": "GPL-3.0-or-later",
+  "require": {
+    "php": ">=7.0",
+    "composer/installers": "~1.2",
+    "dekodeinteraktiv/hogan-core": ">=1.4.2"
+  },
+  "archive": {
+    "exclude": [
+      ".editorconfig",
+      ".gitignore",
+      ".stylelintrc",
+      "CHANGELOG.md",
+      "composer.json",
+      "composer.lock",
+      "LICENSE",
+      "package.json",
+      "phpcs.xml",
+      "yarn.lock"
+    ]
+  }
+}

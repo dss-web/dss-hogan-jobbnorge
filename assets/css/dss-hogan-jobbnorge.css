@@ -1,0 +1,120 @@
+.hogan-module-jobbnorge ul {
+    list-style: none;
+    margin-left: 0;
+    margin-bottom: 0
+}
+
+.hogan-module-jobbnorge .list-items.card-type-medium+.see-more,
+.hogan-module-jobbnorge .list-items.card-type-small+.see-more {
+    margin-left: 0
+}
+
+html[dir=rtl] .hogan-module-jobbnorge .list-items.card-type-medium+.see-more,
+html[dir=rtl] .hogan-module-jobbnorge .list-items.card-type-small+.see-more {
+    margin-left: auto;
+    margin-right: 0
+}
+
+.hogan-module-jobbnorge .list-items.card-type-large+.see-more {
+    text-align: center
+}
+
+.hogan-module-jobbnorge .list-items.card-type-large .list-item,
+.hogan-module-jobbnorge .list-items.card-type-medium .list-item {
+    padding: 0
+}
+
+.hogan-module-jobbnorge .list-items.card-type-large .list-item .column:last-child,
+.hogan-module-jobbnorge .list-items.card-type-medium .list-item .column:last-child {
+    padding: 1.125rem
+}
+
+.hogan-module-jobbnorge .list-items.card-type-large .featured-image,
+.hogan-module-jobbnorge .list-items.card-type-medium .featured-image {
+    padding-bottom: 66.6667%
+}
+
+.hogan-module-jobbnorge .list-items.card-type-medium .list-item .column:first-child {
+    -ms-flex-item-align: center;
+    align-self: center
+}
+
+@media (min-width:420px) {
+    .hogan-module-jobbnorge .list-items.card-type-large {
+        padding: 0;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        max-width: 100%;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-top: -4%
+    }
+
+    .hogan-module-jobbnorge .list-items.card-type-large .list-item {
+        width: 48%;
+        margin-top: 4%;
+        margin-bottom: 0
+    }
+
+    .hogan-module-jobbnorge .list-items.card-type-medium .list-item a {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between
+    }
+
+    .hogan-module-jobbnorge .list-items.card-type-medium .list-item .column:first-child {
+        width: 25%
+    }
+
+    .hogan-module-jobbnorge .list-items.card-type-medium .list-item .column:last-child {
+        width: 75%;
+        padding: 1.125rem 1.5rem;
+        -ms-flex-item-align: center;
+        align-self: center
+    }
+
+    .hogan-module-jobbnorge .list-items.card-type-medium .list-item .entry-summary,
+    .hogan-module-jobbnorge .list-items.card-type-medium .list-item .featured-image {
+        margin-bottom: 0
+    }
+
+    .hogan-module-jobbnorge .list-items.card-type-medium .featured-image {
+        padding-bottom: 100%
+    }
+}
+
+@media (min-width:900px) {
+    .hogan-module-jobbnorge .list-items.card-type-large {
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        margin-top: -3%
+    }
+
+    .hogan-module-jobbnorge .list-items.card-type-large .list-item {
+        width: 31.3333%;
+        margin-top: 3%;
+        margin-right: 3%
+    }
+
+    .hogan-module-jobbnorge .list-items.card-type-large .list-item:nth-child(3n+3) {
+        margin-right: 0
+    }
+}
+
+.hogan-module-jobbnorge .see-more p {
+    margin-top: 1.5rem
+}
+
+@media (min-width:900px) {
+    .hogan-module-jobbnorge .see-more p {
+        margin-top: 2.25rem
+    }
+}
