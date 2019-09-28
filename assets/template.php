@@ -52,12 +52,13 @@ if ( empty( $items ) || ! is_array( $items ) ) {
 		printf(
 			'<li class="list-item">
 					<div class="column">
-						<p>Søknadsfrist: %1$s</p>
-						<h3 class="entry-title"><a href="%2$s">%3$s</a></h3>
-					 	<div class="entry-summary"><p>%4$s %5$s</p></div>
+						<p>%1$s %2$s</p>
+						<h3 class="entry-title"><a href="%3$s">%4$s</a></h3>
+					 	<div class="entry-summary"><p>%5$s %6$s</p></div>
 					</div>
 				</a>
 			</li>',
+			__( 'Søknadsfrist:', 'dss-hogan-jobbnorge' ),
 			esc_html( $item->get_jn_deadline() ),
 			esc_url( $item->get_permalink() ),
 			esc_html( $item->get_jn_title() ),
