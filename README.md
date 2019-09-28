@@ -17,15 +17,16 @@ Downloading this repository and place it in `wp-content/plugins`
 <ul class="list-items card-type-large">
 	<li class="list-item">
 		<div class="column">
-			<p>Søknadsfrist: %1$s</p>
-			<h3 class="entry-title"><a href="%2$s">%3$s</a></h3>
-			<div class="entry-summary"><p>%4$s %5$s</p></div>
+			<p>%1$s %2$s</p>
+			<h3 class="entry-title"><a href="%3$s">%4$s</a></h3>
+			<div class="entry-summary"><p>%5$s %6$s</p></div>
 		</div>
 	</li>
 </ul>
 ```
+1. Due date prefix
 1. Due date
-2. Permalink to job add
-3. Job title
-4. Job decription
-5. 'Read more' link
+1. Permalink to job add
+1. Job title
+1. Job decription
+1. 'Read more' link
