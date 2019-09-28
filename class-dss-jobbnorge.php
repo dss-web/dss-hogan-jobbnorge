@@ -86,7 +86,7 @@ if ( ! class_exists( '\\Dekode\\Hogan\\Jobbnorge' ) && class_exists( '\\Dekode\\
 					'key'           => $this->field_key . '_feed',
 					'label'         => __( 'URL', 'dss-hogan-jobbnorge' ),
 					'name'          => 'feed',
-					'instructions'  => __( 'Add Jobb Norge feed URL', 'dss-hogan-jobbnorge' ),
+					'instructions'  => __( 'Add Jobbnorge feed URL', 'dss-hogan-jobbnorge' ),
 					'allow_null'    => 0,
 					'default_value' => '',
 					'return_format' => 'value',

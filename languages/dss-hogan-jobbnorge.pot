@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: DSS Hogan Module: Jobbnorge\n"
-"POT-Creation-Date: 2019-09-29 01:23+0200\n"
+"POT-Creation-Date: 2019-09-29 01:52+0200\n"
 "PO-Revision-Date: 2019-09-26 10:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -21,39 +21,39 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: assets/template.php:61
-msgid "Søknadsfrist:"
+#: assets/template.php:64
+msgid "Due date:"
 msgstr ""
 
-#: assets/template.php:70
-msgid "Les mer"
+#: assets/template.php:73
+msgid "Read more"
 msgstr ""
 
-#: class-dss-jobbnorge.php:58
+#: class-dss-jobbnorge.php:61
 msgid "Jobbnorge"
 msgstr ""
 
-#: class-dss-jobbnorge.php:84
+#: class-dss-jobbnorge.php:87
 msgid "URL"
 msgstr ""
 
-#: class-dss-jobbnorge.php:86
-msgid "Add Jobb Norge feed URL"
+#: class-dss-jobbnorge.php:89
+msgid "Add Jobbnorge feed URL"
 msgstr ""
 
-#: class-dss-jobbnorge.php:94
+#: class-dss-jobbnorge.php:97
 msgid "Number of items"
 msgstr ""
 
-#: class-dss-jobbnorge.php:96
+#: class-dss-jobbnorge.php:99
 msgid "Max number of items display"
 msgstr ""
 
-#: class-dss-jobbnorge.php:103
+#: class-dss-jobbnorge.php:106
 msgid "Max number of words"
 msgstr ""
 
-#: class-dss-jobbnorge.php:105
+#: class-dss-jobbnorge.php:108
 msgid "Max number of words per item"
 msgstr ""
 
