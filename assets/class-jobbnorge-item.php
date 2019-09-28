@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author: Per Søderlind / DSS
+ * @since: 29/09/2019
+ */
 declare( strict_types = 1 );
 require_once ABSPATH . WPINC . '/class-simplepie.php';
 

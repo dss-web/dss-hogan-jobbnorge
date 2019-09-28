@@ -3,6 +3,9 @@
  * DSS Jobbnorge module class
  *
  * @package Hogan
+ *
+ * @author: Per Søderlind / DSS
+ * @since: 29/09/2019
  */
 
 declare( strict_types = 1 );

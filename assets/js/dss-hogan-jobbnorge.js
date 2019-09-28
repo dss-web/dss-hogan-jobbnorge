@@ -1,3 +1,9 @@
+/**
+ * Adjust heights
+ *
+ * @author: Per Søderlind / DSS
+ * @since: 29/09/2019
+ */
 jQuery(function ($) {
 	$('.hogan-module-jobbnorge').each(function () {
 		// Cache the highest

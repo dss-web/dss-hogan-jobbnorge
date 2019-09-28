@@ -9,6 +9,9 @@
  * $this->preview_image (string) If a preview image should be displayed or a generic icon.
  *
  * @package Hogan
+ *
+ * @author: Per Søderlind / DSS
+ * @since: 29/09/2019
  */
 declare( strict_types = 1 );
 namespace Dekode\Hogan;
