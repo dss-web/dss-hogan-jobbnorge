@@ -31,11 +31,11 @@ Downloading this repository and place it in `wp-content/plugins`
 	</ul>
 	```
 	1. Due date prefix
-	1. Due date
-	1. Permalink to job add
-	1. Job title
-	1. Job decription
-	1. 'Read more' link
+	2. Due date
+	3. Permalink to job add
+	4. Job title
+	5. Job decription
+	6. 'Read more' link
 
 
 ## Copyright and License
