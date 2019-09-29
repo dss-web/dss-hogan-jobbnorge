@@ -5,7 +5,7 @@
  * $this is an instance of the Jobbnorge object.
  *
  * Available properties:
- * $this->feed (string) Array Jobbnorge feed url.
+ * $this->feed (string) Jobbnorge feed url.
  * $this->items (int) Number of items.
  * $this->words (int) Number of word pr item.
  *
