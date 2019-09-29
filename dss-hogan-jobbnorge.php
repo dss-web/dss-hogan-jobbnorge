@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/dss-web/dss-hogan-jobbnorge
  * GitHub Plugin URI: https://github.com/dss-web/dss-hogan-jobbnorge
  * Description: DSS Jobbnorge Module for Hogan.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Per Soderlind
  * Author URI: https://soderlind.no
  * License: GPL-3.0
