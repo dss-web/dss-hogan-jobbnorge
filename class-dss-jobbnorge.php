@@ -26,13 +26,6 @@ if ( ! class_exists( '\\Dekode\\Hogan\\Jobbnorge' ) && class_exists( '\\Dekode\\
 	class Jobbnorge extends Module {
 
 		/**
-		 * Preview image
-		 *
-		 * @var string
-		 */
-		public $preview_image = 'off';
-
-		/**
 		 * URL of feed.
 		 *
 		 * @var $feed
