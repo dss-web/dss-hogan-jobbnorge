@@ -1,5 +1,7 @@
 # Jobbnorge Module for [Hogan](https://github.com/dekodeinteraktiv/hogan-core)
 
+List job postings from [Jobbnorge](https://www.jobbnorge.no/search/en)
+
 ## The module
 
 <img src="assets/dss-hogan-jobbnorge.png">
