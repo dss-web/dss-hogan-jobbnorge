@@ -48,18 +48,21 @@ if ( empty( $items ) || ! is_array( $items ) ) {
 	return;
 }
 ?>
+<!--
 <ul class="list-items card-type-large">
+-->
 	<?php
+echo apply_filters('dss/hogan/module/jobbnorge/html/wrapper/start', '<ul class="list-items card-type-large">');
 	foreach ( $items as $item ) {
 		printf(
-			'<li class="list-item">
+			apply_filters('dss/hogan/module/jobbnorge/html/item','<li class="list-item">
 					<div class="column">
 						<p>%1$s %2$s</p>
 						<h3 class="entry-title"><a href="%3$s">%4$s</a></h3>
 					 	<div class="entry-summary"><p>%5$s %6$s</p></div>
 					</div>
 				</a>
-			</li>',
+			</li>'),
 			__( 'Due date:', 'dss-hogan-jobbnorge' ),
 			esc_html( $item->get_jn_deadline() ),
 			esc_url( $item->get_permalink() ),
@@ -72,5 +75,7 @@ if ( empty( $items ) || ! is_array( $items ) ) {
 			sprintf( ' ... <a href="%s">%s</a>', esc_url( $item->get_permalink() ), __( 'Read more', 'dss-hogan-jobbnorge' ) )
 		);
 	}
+	echo apply_filters('dss/hogan/module/jobbnorge/html/wrapper/end', '</ul>');
+
 	?>
-</ul>
+<!--</ul>-->
