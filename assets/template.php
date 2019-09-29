@@ -35,7 +35,7 @@ if ( function_exists( 'fetch_feed' ) ) {
 		$feed->init();
 		$feed->set_output_encoding( 'UTF-8' );
 		$feed->handle_content_type();
-		$feed->set_cache_duration( HOUR_IN_SECONDS * 6 );
+		$feed->set_cache_duration( 12 * HOUR_IN_SECONDS );
 		$limit = $feed->get_item_quantity( $number_of_items );
 		$items = $feed->get_items( 0, $limit );
 	endif;
