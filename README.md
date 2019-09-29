@@ -35,7 +35,7 @@ Downloading this repository and place it in `wp-content/plugins`
 	- `%3$s`: Permalink to job add
 	- `%4$s`: Job title
 	- `%5$s`: Job decription
-	- `%6$s`: 'Read more' link
+	- `%6$s`: 'Read more' link and text, default is ` ... <a href="[Permalink to job add]">Read more</a>`
 
 
 ## Copyright and License
