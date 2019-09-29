@@ -21,11 +21,9 @@ if ( ! defined( 'ABSPATH' ) || ! ( $this instanceof Jobbnorge ) ) {
 	return; // Exit if accessed directly.
 }
 
-
 $feed_url        = ( isset( $this->feed ) ) ? $this->feed : '';
 $number_of_items = ( isset( $this->items ) && is_numeric( $this->items ) ) ? $this->items : 5;
 $number_of_words = ( isset( $this->words ) && is_numeric( $this->words ) ) ? $this->words : 20;
-
 
 require_once ABSPATH . WPINC . '/feed.php';
 require_once 'class-jobbnorge-item.php';
