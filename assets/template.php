@@ -21,6 +21,30 @@ if ( ! defined( 'ABSPATH' ) || ! ( $this instanceof Jobbnorge ) ) {
 	return; // Exit if accessed directly.
 }
 
+add_action('wp_feed_options', function( &$feed, $url=NULL ) {
+	if( ! $url ){
+        $url = $feed->feed_url;
+    }
+
+	if (false !== strstr( $url, 'jobbnorge' )) {
+
+		require_once 'class-simplepie-sort-on-deafline.php';
+
+		$feed = new \SimplePieSortOnDeadline();
+
+		$feed->set_sanitize_class( '\WP_SimplePie_Sanitize_KSES' );
+		// We must manually overwrite $feed->sanitize because SimplePie's
+		// constructor sets it before we have a chance to set the sanitization class
+		$feed->sanitize = new \WP_SimplePie_Sanitize_KSES();
+
+		$feed->set_cache_class( '\WP_Feed_Cache' );
+		$feed->set_file_class( '\WP_SimplePie_File' );
+
+		$feed->set_feed_url($url);
+		$feed->set_cache_duration( apply_filters( 'wp_feed_cache_transient_lifetime', 12 * HOUR_IN_SECONDS, $url ) );
+	}
+} );
+
 $feed_url        = ( isset( $this->feed ) ) ? $this->feed : '';
 $number_of_items = ( isset( $this->items ) && is_numeric( $this->items ) ) ? $this->items : 5;
 $number_of_words = ( isset( $this->words ) && is_numeric( $this->words ) ) ? $this->words : 20;
