@@ -21,12 +21,12 @@ if ( ! defined( 'ABSPATH' ) || ! ( $this instanceof Jobbnorge ) ) {
 	return; // Exit if accessed directly.
 }
 
-add_action('wp_feed_options', function( &$feed, $url=NULL ) {
-	if( ! $url ){
-        $url = $feed->feed_url;
-    }
+add_action('wp_feed_options', function( &$feed, $url = null ) {
+	if ( ! $url ) {
+		$url = $feed->feed_url;
+	}
 
-	if (false !== strstr( $url, 'jobbnorge' )) {
+	if ( false !== strstr( $url, 'jobbnorge' ) ) {
 
 		require_once 'class-simplepie-sort-on-deafline.php';
 
@@ -40,7 +40,7 @@ add_action('wp_feed_options', function( &$feed, $url=NULL ) {
 		$feed->set_cache_class( '\WP_Feed_Cache' );
 		$feed->set_file_class( '\WP_SimplePie_File' );
 
-		$feed->set_feed_url($url);
+		$feed->set_feed_url( $url );
 		$feed->set_cache_duration( apply_filters( 'wp_feed_cache_transient_lifetime', 12 * HOUR_IN_SECONDS, $url ) );
 	}
 } );
@@ -57,9 +57,7 @@ if ( function_exists( 'fetch_feed' ) ) {
 	if ( ! is_wp_error( $feed ) ) :
 		$feed->set_item_class( '\Jobbnorge_Item' );
 		$feed->init();
-		$feed->set_output_encoding( 'UTF-8' );
 		$feed->handle_content_type();
-		$feed->set_cache_duration( 12 * HOUR_IN_SECONDS );
 		$limit = $feed->get_item_quantity( $number_of_items );
 		$items = $feed->get_items( 0, $limit );
 	endif;
@@ -76,10 +74,10 @@ if ( empty( $items ) || ! is_array( $items ) ) {
 <ul class="list-items card-type-large">
 -->
 	<?php
-echo apply_filters('dss/hogan/module/jobbnorge/html/wrapper/start', '<ul class="list-items card-type-large">');
+	echo apply_filters( 'dss/hogan/module/jobbnorge/html/wrapper/start', '<ul class="list-items card-type-large">' );
 	foreach ( $items as $item ) {
 		printf(
-			apply_filters('dss/hogan/module/jobbnorge/html/item','<li class="list-item">
+			apply_filters('dss/hogan/module/jobbnorge/html/item', '<li class="list-item">
 					<div class="column">
 						<p>%1$s %2$s</p>
 						<h3 class="entry-title"><a href="%3$s">%4$s</a></h3>
@@ -99,7 +97,7 @@ echo apply_filters('dss/hogan/module/jobbnorge/html/wrapper/start', '<ul class="
 			sprintf( ' ... <a href="%s">%s</a>', esc_url( $item->get_permalink() ), __( 'Read more', 'dss-hogan-jobbnorge' ) )
 		);
 	}
-	echo apply_filters('dss/hogan/module/jobbnorge/html/wrapper/end', '</ul>');
+	echo apply_filters( 'dss/hogan/module/jobbnorge/html/wrapper/end', '</ul>' );
 
 	?>
 <!--</ul>-->
