@@ -55,6 +55,7 @@ if ( ! class_exists( '\\Dekode\\Hogan\\Jobbnorge' ) && class_exists( '\\Dekode\\
 			$this->template = __DIR__ . '/assets/template.php';
 
 			parent::__construct();
+
 		}
 
 		/**
@@ -103,6 +104,16 @@ if ( ! class_exists( '\\Dekode\\Hogan\\Jobbnorge' ) && class_exists( '\\Dekode\\
 					'default_value' => apply_filters( 'dss/hogan/module/feed/words', 20 ),
 
 				],
+				[
+					'type'          => 'text',
+					'key'           => $this->field_key . '_placeholder',
+					'label'         => __( 'Placeholder', 'dss-hogan-jobbnorge' ),
+					'name'          => 'placeholder',
+					'instructions'  => __( 'Text to display when feed is empty', 'dss-hogan-jobbnorge' ),
+					'required'      => 0,
+					'default_value' => apply_filters( 'dss/hogan/module/feed/placeholder', 'Vi har ingen ledige stillinger nå.' ),
+
+				],
 			];
 
 		}
@@ -119,9 +130,10 @@ if ( ! class_exists( '\\Dekode\\Hogan\\Jobbnorge' ) && class_exists( '\\Dekode\\
 
 			parent::load_args_from_layout_content( $raw_content, $counter );
 
-			$this->feed  = $raw_content['feed'];
-			$this->items = $raw_content['items'];
-			$this->words = $raw_content['words'];
+			$this->feed        = $raw_content['feed'];
+			$this->items       = $raw_content['items'];
+			$this->words       = $raw_content['words'];
+			$this->placeholder = $raw_content['placeholder'];
 
 		}
 
@@ -131,7 +143,7 @@ if ( ! class_exists( '\\Dekode\\Hogan\\Jobbnorge' ) && class_exists( '\\Dekode\\
 		 * @return bool Whether validation of the module is successful / filled with content.
 		 */
 		public function validate_args() : bool {
-			return ! empty( $this->feed );
+			return ! empty( $this->feed ) || ! empty( $this->placeholder );
 		}
 	}
 } // End if().
