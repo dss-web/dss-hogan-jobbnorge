@@ -249,6 +249,22 @@ final class JobbnorgeApiTest extends TestCase {
 	}
 
 	/**
+	 * Every returned job must be an array before sorting and rendering.
+	 */
+	public function testReturnsErrorWhenJobsCollectionContainsInvalidItem() : void {
+		Functions\expect( 'wp_remote_get' )
+			->once()
+			->andReturn( $this->rawResponse( '{"jobs":[null]}' ) );
+
+		Actions\expectDone( 'dss/hogan/module/jobbnorge/api_error' )->once();
+
+		$jobs = ( new DSS_Jobbnorge_API( '1994' ) )->get_jobs();
+
+		self::assertInstanceOf( \WP_Error::class, $jobs );
+		self::assertSame( 'jobbnorge_invalid_response', $jobs->get_error_code() );
+	}
+
+	/**
 	 * An empty jobs collection is a valid response.
 	 */
 	public function testReturnsEmptyArrayWhenThereAreNoJobs() : void {
@@ -271,7 +287,13 @@ final class JobbnorgeApiTest extends TestCase {
 
 		( new DSS_Jobbnorge_API( '1994' ) )->get_jobs();
 
-		self::assertCount( 1, (array) glob( $this->cache_dir . '/*.php' ) );
+		$cache_files = (array) glob( $this->cache_dir . '/*.json' );
+
+		self::assertCount( 1, $cache_files );
+		self::assertSame(
+			[ $this->job( 'Cached', '01.12.2026' ) ],
+			json_decode( (string) file_get_contents( $cache_files[0] ), true )
+		);
 	}
 
 	/**
@@ -290,6 +312,28 @@ final class JobbnorgeApiTest extends TestCase {
 
 		self::assertSame( 'From API', $first[0]['title'] );
 		self::assertSame( $first, $again );
+	}
+
+	/**
+	 * Cache files are data only; invalid content is never executed.
+	 */
+	public function testInvalidJsonCacheIsRejectedWithoutExecution() : void {
+		$this->useFileCache();
+		mkdir( $this->cache_dir );
+
+		$marker     = $this->cache_dir . '/executed';
+		$cache_file = $this->cache_dir . '/dss_jobbnorge_' . md5( 'https://publicapi.jobbnorge.no/v3/Jobs?employer=1994' ) . '.json';
+		file_put_contents( $cache_file, '<?php file_put_contents(' . var_export( $marker, true ) . ', "yes"); return [];' );
+
+		Actions\expectDone( 'dss/hogan/module/jobbnorge/cache_error' )->once();
+		Functions\expect( 'wp_remote_get' )
+			->once()
+			->andReturn( $this->response( [ $this->job( 'Fresh', '01.12.2026' ) ] ) );
+
+		$jobs = ( new DSS_Jobbnorge_API( '1994' ) )->get_jobs();
+
+		self::assertSame( 'Fresh', $jobs[0]['title'] );
+		self::assertFileDoesNotExist( $marker );
 	}
 
 	/**
@@ -312,7 +356,7 @@ final class JobbnorgeApiTest extends TestCase {
 		$api   = new DSS_Jobbnorge_API( '1994' );
 		$first = $api->get_jobs();
 
-		$cache_files = (array) glob( $this->cache_dir . '/*.php' );
+		$cache_files = (array) glob( $this->cache_dir . '/*.json' );
 		touch( $cache_files[0], time() - 61 );
 		clearstatcache( true, $cache_files[0] );
 
@@ -342,7 +386,7 @@ final class JobbnorgeApiTest extends TestCase {
 		$api->get_jobs();
 		$api->get_jobs();
 
-		self::assertSame( [], (array) glob( $this->cache_dir . '/*.php' ) );
+		self::assertSame( [], (array) glob( $this->cache_dir . '/*.json' ) );
 	}
 
 	/**
@@ -381,7 +425,7 @@ final class JobbnorgeApiTest extends TestCase {
 		$api->get_jobs();
 		$api->get_jobs();
 
-		self::assertSame( [], (array) glob( $this->cache_dir . '/*.php' ) );
+		self::assertSame( [], (array) glob( $this->cache_dir . '/*.json' ) );
 	}
 
 	/**

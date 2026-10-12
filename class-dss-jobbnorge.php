@@ -81,22 +81,19 @@ if ( ! class_exists( '\\Dekode\\Hogan\\Jobbnorge' ) && class_exists( '\\Dekode\\
 		 */
 		public function get_fields() : array {
 			$employer_field_key = $this->field_key . '_feed';
-			$employer_choices = $this->get_employer_choices();
-			$employer_field   = [
-				'type'          => 'select',
+			$employer_field     = [
+				'type'          => 'text',
 				'key'           => $employer_field_key,
 				'label'         => __( 'Employer', 'dss-hogan-jobbnorge' ),
 				'name'          => 'feed',
-				'instructions'  => __( 'Select one or more Jobbnorge employers.', 'dss-hogan-jobbnorge' ),
+				'instructions'  => __( 'Add one or more Jobbnorge employer IDs, separated by commas.', 'dss-hogan-jobbnorge' ),
 				'allow_null'    => 1,
 				'default_value' => '',
 				'return_format' => 'value',
-				'choices'       => $employer_choices,
-				'multiple'      => 1,
-				'ui'            => 1,
 			];
 
 			add_filter( 'acf/prepare_field/key=' . $employer_field_key, [ $this, 'prepare_employer_field' ] );
+			$employer_field = $this->prepare_employer_field( $employer_field );
 
 			return [
 				$employer_field,
@@ -140,7 +137,21 @@ if ( ! class_exists( '\\Dekode\\Hogan\\Jobbnorge' ) && class_exists( '\\Dekode\\
 		 * @return array
 		 */
 		public function prepare_employer_field( array $field ) : array {
-			$field['choices'] = $this->get_employer_choices();
+			$choices = $this->get_employer_choices();
+
+			if ( empty( $choices ) ) {
+				$field['type']         = 'text';
+				$field['instructions'] = __( 'Add one or more Jobbnorge employer IDs, separated by commas.', 'dss-hogan-jobbnorge' );
+				unset( $field['choices'], $field['multiple'], $field['ui'] );
+
+				return $field;
+			}
+
+			$field['type']         = 'select';
+			$field['instructions'] = __( 'Select one or more Jobbnorge employers.', 'dss-hogan-jobbnorge' );
+			$field['choices']      = $choices;
+			$field['multiple']     = 1;
+			$field['ui']           = 1;
 
 			return $field;
 		}

@@ -57,6 +57,11 @@ abstract class TestCase extends PHPUnitTestCase {
 		Functions\when( 'home_url' )->justReturn( 'https://example.test/' );
 		Functions\when( 'get_transient' )->justReturn( false );
 		Functions\when( 'set_transient' )->justReturn( true );
+		Functions\when( 'wp_json_encode' )->alias(
+			static function ( $value ) {
+				return json_encode( $value );
+			}
+		);
 	}
 
 	/**

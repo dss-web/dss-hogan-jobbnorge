@@ -50,14 +50,15 @@ final class JobbnorgeModuleTest extends TestCase {
 	}
 
 	/**
-	 * The employer field allows selecting several employers.
+	 * Without server choices, the field allows entering employer IDs.
 	 */
-	public function testEmployerFieldIsAMultiSelect() : void {
+	public function testEmployerFieldFallsBackToTextInput() : void {
 		$fields = $this->module()->get_fields();
 
-		self::assertSame( 'select', $fields[0]['type'] );
+		self::assertSame( 'text', $fields[0]['type'] );
 		self::assertSame( 'feed', $fields[0]['name'] );
-		self::assertSame( 1, $fields[0]['multiple'] );
+		self::assertArrayNotHasKey( 'multiple', $fields[0] );
+		self::assertStringContainsString( 'separated by commas', $fields[0]['instructions'] );
 	}
 
 	/**
@@ -68,7 +69,8 @@ final class JobbnorgeModuleTest extends TestCase {
 		$module = $this->module();
 		$fields = $module->get_fields();
 
-		self::assertSame( [], $fields[0]['choices'] );
+		self::assertSame( 'text', $fields[0]['type'] );
+		self::assertArrayNotHasKey( 'choices', $fields[0] );
 		self::assertTrue(
 			has_filter( 'acf/prepare_field/key=' . $module->field_key . '_feed' )
 		);
@@ -86,6 +88,8 @@ final class JobbnorgeModuleTest extends TestCase {
 			],
 			$prepared['choices']
 		);
+		self::assertSame( 'select', $prepared['type'] );
+		self::assertSame( 1, $prepared['multiple'] );
 	}
 
 	/**
@@ -96,23 +100,24 @@ final class JobbnorgeModuleTest extends TestCase {
 			->zeroOrMoreTimes()
 			->andReturn( $this->employers() );
 
-		$prepared = $this->module()->prepare_employer_field( [ 'choices' => [] ] );
+		$prepared = $this->module()->prepare_employer_field( [] );
 
 		self::assertArrayNotHasKey( '', $prepared['choices'] );
 		self::assertNotContains( 'Velg arbeidsgivere', $prepared['choices'] );
 	}
 
 	/**
-	 * An unusable employer list does not break the field.
+	 * An unusable employer list retains the text input fallback.
 	 */
 	public function testInvalidEmployerListYieldsNoChoices() : void {
 		Filters\expectApplied( 'jobbnorge_employers' )
 			->zeroOrMoreTimes()
 			->andReturn( 'not-a-list' );
 
-		$prepared = $this->module()->prepare_employer_field( [ 'choices' => [] ] );
+		$prepared = $this->module()->prepare_employer_field( [] );
 
-		self::assertSame( [], $prepared['choices'] );
+		self::assertSame( 'text', $prepared['type'] );
+		self::assertArrayNotHasKey( 'choices', $prepared );
 	}
 
 	/**

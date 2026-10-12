@@ -93,7 +93,7 @@ if ( ! class_exists( 'DSS_Jobbnorge_API' ) ) {
 				$cached_jobs = 0 < $cache_duration ? get_transient( $cache_key ) : false;
 			}
 
-			if ( is_array( $cached_jobs ) ) {
+			if ( is_array( $cached_jobs ) && $this->is_valid_jobs( $cached_jobs ) ) {
 				return $cached_jobs;
 			}
 
@@ -128,7 +128,12 @@ if ( ! class_exists( 'DSS_Jobbnorge_API' ) ) {
 			}
 
 			$data = json_decode( wp_remote_retrieve_body( $response ), true );
-			if ( ! is_array( $data ) || ! isset( $data['jobs'] ) || ! is_array( $data['jobs'] ) ) {
+			if (
+				! is_array( $data )
+				|| ! isset( $data['jobs'] )
+				|| ! is_array( $data['jobs'] )
+				|| ! $this->is_valid_jobs( $data['jobs'] )
+			) {
 				$error = new \WP_Error(
 					'jobbnorge_invalid_response',
 					__( 'Jobbnorge returned an invalid response.', 'dss-hogan-jobbnorge' )
@@ -158,7 +163,12 @@ if ( ! class_exists( 'DSS_Jobbnorge_API' ) ) {
 		private function get_file_cache( string $cache_key, int $cache_duration ) {
 			$cache_file = $this->get_cache_file( $cache_key );
 
-			if ( false === $cache_file || ! is_readable( $cache_file ) ) {
+			if ( false === $cache_file || ! file_exists( $cache_file ) ) {
+				return false;
+			}
+
+			if ( ! is_readable( $cache_file ) ) {
+				do_action( 'dss/hogan/module/jobbnorge/cache_error', $cache_file );
 				return false;
 			}
 
@@ -167,9 +177,19 @@ if ( ! class_exists( 'DSS_Jobbnorge_API' ) ) {
 				return false;
 			}
 
-			$cached_jobs = include $cache_file;
+			$cache_data = file_get_contents( $cache_file );
+			if ( false === $cache_data ) {
+				do_action( 'dss/hogan/module/jobbnorge/cache_error', $cache_file );
+				return false;
+			}
 
-			return is_array( $cached_jobs ) ? $cached_jobs : false;
+			$cached_jobs = json_decode( $cache_data, true );
+			if ( ! is_array( $cached_jobs ) || JSON_ERROR_NONE !== json_last_error() ) {
+				do_action( 'dss/hogan/module/jobbnorge/cache_error', $cache_file );
+				return false;
+			}
+
+			return $cached_jobs;
 		}
 
 		/**
@@ -198,15 +218,20 @@ if ( ! class_exists( 'DSS_Jobbnorge_API' ) ) {
 		 * @param array  $jobs      Jobs to cache.
 		 * @return void
 		 */
-		private function set_file_cache( string $cache_key, array $jobs ) : void {
+		private function set_file_cache( string $cache_key, array $jobs ) {
 			$cache_file = $this->get_cache_file( $cache_key, true );
 
 			if ( false === $cache_file ) {
 				return;
 			}
 
-			$cache_data = "<?php\nreturn " . var_export( $jobs, true ) . ";\n";
-			$result     = file_put_contents( $cache_file, $cache_data, LOCK_EX );
+			$cache_data = wp_json_encode( $jobs );
+			if ( false === $cache_data ) {
+				do_action( 'dss/hogan/module/jobbnorge/cache_error', $cache_file );
+				return;
+			}
+
+			$result = file_put_contents( $cache_file, $cache_data, LOCK_EX );
 
 			if ( false === $result ) {
 				do_action( 'dss/hogan/module/jobbnorge/cache_error', $cache_file );
@@ -236,11 +261,33 @@ if ( ! class_exists( 'DSS_Jobbnorge_API' ) ) {
 				return false;
 			}
 
-			if ( ! is_dir( $cache_path ) || ! is_writable( $cache_path ) ) {
+			if ( file_exists( $cache_path ) && ! is_dir( $cache_path ) ) {
+				do_action( 'dss/hogan/module/jobbnorge/cache_error', $cache_path );
 				return false;
 			}
 
-			return trailingslashit( $cache_path ) . $cache_key . '.php';
+			if ( $create && ( ! is_dir( $cache_path ) || ! is_writable( $cache_path ) ) ) {
+				do_action( 'dss/hogan/module/jobbnorge/cache_error', $cache_path );
+				return false;
+			}
+
+			return trailingslashit( $cache_path ) . $cache_key . '.json';
+		}
+
+		/**
+		 * Check that every job can be safely processed and rendered.
+		 *
+		 * @param array $jobs Jobs to validate.
+		 * @return bool
+		 */
+		private function is_valid_jobs( array $jobs ) : bool {
+			foreach ( $jobs as $job ) {
+				if ( ! is_array( $job ) ) {
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 		/**
