@@ -2,18 +2,25 @@
 
 List job postings from [Jobbnorge](https://www.jobbnorge.no/search/en)
 
-The module uses the public Jobbnorge API. Add the employer ID supplied by
-Jobbnorge in the module settings. Multiple employer IDs can be separated by
-commas.
+The module retrieves jobs from the public Jobbnorge API v3. Add one or more
+employer IDs supplied by Jobbnorge in the module settings, separated by commas.
+When the `jobbnorge_employers` filter supplies valid employer choices, the
+settings field is a multi-select; otherwise, enter the IDs as text. Jobs from
+the selected employers are combined and sorted by deadline, with the nearest
+deadline first.
 
-When the `jobbnorge_employers` filter supplies employers, Hogan displays them
-as a multi-select field. This is the same server-provided employer list used by
-the Jobbnorge block.
+If no jobs are available, or the API request fails, the module displays the
+configured placeholder when one is set. Its default text is
+`Vi har ingen ledige stillinger nå.`.
 
 The existing FIN JobListBuilder URL is automatically mapped to employer ID
 `1994`. Other legacy feed URLs should be replaced with their corresponding
 employer IDs or mapped with the
 `dss/hogan/module/jobbnorge/legacy_employer_map` filter.
+
+Responses are cached for 30 minutes by default using WordPress transients. An
+optional file cache can also be enabled by setting the shared
+`jobbnorge_cache_path` filter to a writable directory.
 
 ## The module
 
@@ -24,11 +31,12 @@ Downloading this repository and place it in `wp-content/plugins`
 
 ## Available filters
 - `dss/hogan/module/jobbnorge/items` : Set default number of items.
-- `dss/hogan/module/jobbnorge/words` : Set default number of words per item.
+- `dss/hogan/module/feed/words` : Set default number of words per item.
+- `dss/hogan/module/feed/placeholder` : Set the default text shown when there are no jobs or the API request fails.
 - `dss/hogan/module/jobbnorge/api_url`: Change the public API endpoint.
 - `jobbnorge_cache_time`: Change the API cache duration. Hogan uses the same filter as the Jobbnorge block; the default is 30 minutes.
 - `dss/hogan/module/jobbnorge/cache_duration`: Override the cache duration for Hogan after `jobbnorge_cache_time` has run.
-- `dss/hogan/module/jobbnorge/api_error`: Runs when an API request or response fails.
+- `dss/hogan/module/jobbnorge/api_error`: Runs when an API request or response fails; receives the error and request URL.
 - `jobbnorge_cache_path`: Set the file cache directory. Hogan uses the same filter as the Jobbnorge block.
 - `dss/hogan/module/jobbnorge/cache_error`: Runs when the configured file cache cannot be read or written.
 - `dss/hogan/module/jobbnorge/legacy_employer_map`: Map legacy JobListBuilder UUIDs to employer IDs.
