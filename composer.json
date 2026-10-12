@@ -27,7 +27,27 @@
 			"LICENSE",
 			"package.json",
 			"phpcs.xml",
+			"phpunit.xml.dist",
+			"tests",
+			"vendor",
 			"yarn.lock"
 		]
+	},
+	"require-dev": {
+		"brain/monkey": "^2.6",
+		"phpunit/phpunit": "^9.6"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"DSS\\Hogan\\Jobbnorge\\Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"test": "phpunit"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		}
 	}
 }
